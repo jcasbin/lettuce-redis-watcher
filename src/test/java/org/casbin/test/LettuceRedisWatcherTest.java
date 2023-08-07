@@ -51,13 +51,13 @@ public class LettuceRedisWatcherTest {
     public void testConnectWatcherWithType() {
         String redisTopic = "jcasbin-topic";
         Assert.assertThrows(IllegalArgumentException.class, () -> {
-            new LettuceRedisWatcher("192.168.3.244", 6379, redisTopic, "sentinel");
+            new LettuceRedisWatcher("127.0.0.1", 6378, redisTopic, "sentinel");
         });
 
-        LettuceRedisWatcher lettuceRedisWatcherStandalone = new LettuceRedisWatcher("192.168.3.244", 6378, redisTopic, "standalone");
+        LettuceRedisWatcher lettuceRedisWatcherStandalone = new LettuceRedisWatcher("127.0.0.1", 6378, redisTopic, "standalone");
         Assert.assertNotNull(lettuceRedisWatcherStandalone);
 
-        LettuceRedisWatcher lettuceRedisWatcherCluster = new LettuceRedisWatcher("192.168.3.244", 6378, redisTopic, "cluster");
+        LettuceRedisWatcher lettuceRedisWatcherCluster = new LettuceRedisWatcher("127.0.0.1", 6378, redisTopic, "cluster");
         Assert.assertNotNull(lettuceRedisWatcherCluster);
     }
 }
