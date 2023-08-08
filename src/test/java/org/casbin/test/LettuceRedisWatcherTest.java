@@ -25,19 +25,15 @@ public class LettuceRedisWatcherTest {
 
     @Test
     public void testUpdate() throws InterruptedException {
-        this.initWatcher();
         this.lettuceRedisWatcher.update();
         Thread.sleep(100);
     }
 
     @Test
     public void testConsumerCallback() throws InterruptedException {
-        this.initWatcher();
-        while (true) {
-            this.lettuceRedisWatcher.setUpdateCallback((s) -> System.out.println(s));
-            this.lettuceRedisWatcher.update();
-            Thread.sleep(500);
-        }
+        this.lettuceRedisWatcher.setUpdateCallback((s) -> System.out.println(s));
+        this.lettuceRedisWatcher.update();
+        Thread.sleep(500);
     }
 
     @Test
