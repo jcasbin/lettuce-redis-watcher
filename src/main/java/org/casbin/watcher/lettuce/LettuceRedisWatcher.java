@@ -89,7 +89,11 @@ public class LettuceRedisWatcher implements Watcher {
             if (statefulRedisPubSubConnection.isOpen()) {
                 String msg = "Casbin policy has a new version from redis watcher: ".concat(this.localId);
                 statefulRedisPubSubConnection.async().publish(this.redisChannelName, msg);
+
+                Thread.sleep(100);
             }
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Publish error! The localId: " + this.localId, e);
         }
     }
 
@@ -110,8 +114,6 @@ public class LettuceRedisWatcher implements Watcher {
      * @return AbstractRedisClient
      */
     private AbstractRedisClient getLettuceRedisClient(String host, Integer port, String nodes, String password, int timeout, String type) {
-        // todo default standalone ?
-        // type = StringUtils.isEmpty(type) ? WatcherConstant.LETTUCE_REDIS_TYPE_STANDALONE : type;
         if (StringUtils.isNotEmpty(type) && StringUtils.equalsAnyIgnoreCase(type,
                 WatcherConstant.LETTUCE_REDIS_TYPE_STANDALONE, WatcherConstant.LETTUCE_REDIS_TYPE_CLUSTER)) {
             ClientResources clientResources = DefaultClientResources.builder()
@@ -146,9 +148,9 @@ public class LettuceRedisWatcher implements Watcher {
                 // cluster
                 TimeoutOptions timeoutOptions = TimeoutOptions.builder().fixedTimeout(Duration.of(timeout, ChronoUnit.SECONDS)).build();
                 ClusterTopologyRefreshOptions topologyRefreshOptions = ClusterTopologyRefreshOptions.builder()
-                        .enablePeriodicRefresh(Duration.of(10, ChronoUnit.MINUTES))
-                        .enableAdaptiveRefreshTrigger(ClusterTopologyRefreshOptions.RefreshTrigger.MOVED_REDIRECT, ClusterTopologyRefreshOptions.RefreshTrigger.PERSISTENT_RECONNECTS)
-                        .adaptiveRefreshTriggersTimeout(Duration.of(30, ChronoUnit.SECONDS))
+                        .enablePeriodicRefresh(Duration.ofMinutes(10))
+                        .enableAdaptiveRefreshTrigger(ClusterTopologyRefreshOptions.RefreshTrigger.values())
+                        .adaptiveRefreshTriggersTimeout(Duration.ofSeconds(30))
                         .build();
                 ClusterClientOptions clusterClientOptions = ClusterClientOptions.builder()
                         .autoReconnect(true)
@@ -163,7 +165,7 @@ public class LettuceRedisWatcher implements Watcher {
                         WatcherConstant.REDIS_URI_PREFIX.concat(nodes);
                 logger.info("Redis Cluster Uri: {}", redisUri);
                 List<RedisURI> redisURIList = RedisClusterURIUtil.toRedisURIs(URI.create(redisUri));
-                RedisClusterClient redisClusterClient = RedisClusterClient.create(clientResources, redisURIList);
+                RedisClusterClient redisClusterClient = RedisClusterClient.create(clientResources, redisURIList.get(0));
                 redisClusterClient.setOptions(clusterClientOptions);
                 return redisClusterClient;
             }

@@ -25,7 +25,7 @@ public class LettuceRedisWatcherTest {
 
     public void initClusterWatcher() {
         String redisTopic = "jcasbin-topic";
-        // modify your cluster nodes
+        // modify your cluster nodes. any one of these nodes.
         this.lettuceRedisWatcher = new LettuceRedisWatcher("192.168.1.234:6380,192.168.1.234:6381,192.168.1.234:6382", redisTopic, 2000, "123456");
         Enforcer enforcer = new Enforcer();
         enforcer.setWatcher(this.lettuceRedisWatcher);
@@ -35,7 +35,6 @@ public class LettuceRedisWatcherTest {
     public void testUpdate() throws InterruptedException {
         // this.initClusterWatcher();
         this.lettuceRedisWatcher.update();
-        Thread.sleep(100);
     }
 
     @Test
@@ -44,7 +43,6 @@ public class LettuceRedisWatcherTest {
         // while (true) {
         this.lettuceRedisWatcher.setUpdateCallback((s) -> System.out.println(s));
         this.lettuceRedisWatcher.update();
-        Thread.sleep(100);
         // }
     }
 
