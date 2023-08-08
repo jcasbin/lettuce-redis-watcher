@@ -18,7 +18,7 @@ public class LettuceRedisWatcherTest {
     @Before
     public void initWatcher() {
         String redisTopic = "jcasbin-topic";
-        this.lettuceRedisWatcher = new LettuceRedisWatcher("192.168.3.244", 6379, redisTopic, 2000, "123456");
+        this.lettuceRedisWatcher = new LettuceRedisWatcher("127.0.0.1", 6379, redisTopic, 2000, "foobared");
         Enforcer enforcer = new Enforcer();
         enforcer.setWatcher(this.lettuceRedisWatcher);
     }
