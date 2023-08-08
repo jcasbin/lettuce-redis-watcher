@@ -18,46 +18,47 @@ public class LettuceRedisWatcherTest {
     @Before
     public void initWatcher() {
         String redisTopic = "jcasbin-topic";
-        this.lettuceRedisWatcher = new LettuceRedisWatcher("127.0.0.1", 6379, redisTopic, 2000, "foobared", "standalone");
+        this.lettuceRedisWatcher = new LettuceRedisWatcher("127.0.0.1", 6379, redisTopic, 2000, "foobared");
+        Enforcer enforcer = new Enforcer();
+        enforcer.setWatcher(this.lettuceRedisWatcher);
+    }
+
+    public void initClusterWatcher() {
+        String redisTopic = "jcasbin-topic";
+        // modify your cluster nodes
+        this.lettuceRedisWatcher = new LettuceRedisWatcher("192.168.1.234:6380,192.168.1.234:6381,192.168.1.234:6382", redisTopic, 2000, "123456");
         Enforcer enforcer = new Enforcer();
         enforcer.setWatcher(this.lettuceRedisWatcher);
     }
 
     @Test
     public void testUpdate() throws InterruptedException {
-        this.initWatcher();
+        // this.initClusterWatcher();
         this.lettuceRedisWatcher.update();
         Thread.sleep(100);
     }
 
     @Test
     public void testConsumerCallback() throws InterruptedException {
-        this.initWatcher();
-        while (true) {
-            this.lettuceRedisWatcher.setUpdateCallback((s) -> System.out.println(s));
-            this.lettuceRedisWatcher.update();
-            Thread.sleep(500);
-        }
+        // this.initClusterWatcher();
+        // while (true) {
+        this.lettuceRedisWatcher.setUpdateCallback((s) -> System.out.println(s));
+        this.lettuceRedisWatcher.update();
+        Thread.sleep(100);
+        // }
     }
 
     @Test
     public void testConnectWatcherWithoutPassword() {
         String redisTopic = "jcasbin-topic";
-        LettuceRedisWatcher lettuceRedisWatcherWithoutPassword = new LettuceRedisWatcher("127.0.0.1", 6378, redisTopic, "standalone");
+        LettuceRedisWatcher lettuceRedisWatcherWithoutPassword = new LettuceRedisWatcher("127.0.0.1", 6378, redisTopic);
         Assert.assertNotNull(lettuceRedisWatcherWithoutPassword);
     }
 
     @Test
-    public void testConnectWatcherWithType() {
+    public void testConnectWatcherCluster() {
         String redisTopic = "jcasbin-topic";
-        Assert.assertThrows(IllegalArgumentException.class, () -> {
-            new LettuceRedisWatcher("127.0.0.1", 6378, redisTopic, "sentinel");
-        });
-
-        LettuceRedisWatcher lettuceRedisWatcherStandalone = new LettuceRedisWatcher("127.0.0.1", 6378, redisTopic, "standalone");
-        Assert.assertNotNull(lettuceRedisWatcherStandalone);
-
-        LettuceRedisWatcher lettuceRedisWatcherCluster = new LettuceRedisWatcher("127.0.0.1", 6378, redisTopic, "cluster");
+        LettuceRedisWatcher lettuceRedisWatcherCluster = new LettuceRedisWatcher("127.0.0.1:6380,127.0.0.1:6381,127.0.0.1:6382", redisTopic, 2000, null);
         Assert.assertNotNull(lettuceRedisWatcherCluster);
     }
 }
