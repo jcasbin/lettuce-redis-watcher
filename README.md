@@ -8,7 +8,7 @@
 [![codebeat badge](https://codebeat.co/badges/8b3da1c4-3a61-4123-a3d4-002b2598a297)](https://codebeat.co/projects/github-com-jcasbin-lettuce-redis-watcher-master)
 [![Maven Central](https://img.shields.io/maven-central/v/org.casbin/jcasbin-lettuce-redis-watcher.svg)](https://mvnrepository.com/artifact/org.casbin/jcasbin-lettuce-redis-watcher/latest)
 [![Release](https://img.shields.io/github/release/jcasbin/lettuce-redis-watcher.svg)](https://github.com/jcasbin/lettuce-redis-watcher/releases/latest)
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/casbin/lobby)
+[![Discord](https://img.shields.io/discord/1022748306096537660?logo=discord&label=discord&color=5865F2)](https://discord.gg/S5UjpzGZjN)
 
 ---
 [![Security Status](https://www.murphysec.com/platform3/v31/badge/1688427475171692544.svg)](https://www.murphysec.com/console/report/1688411419949424640/1688427475171692544)
