@@ -10,10 +10,6 @@
 [![Release](https://img.shields.io/github/release/jcasbin/lettuce-redis-watcher.svg)](https://github.com/jcasbin/lettuce-redis-watcher/releases/latest)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/casbin/lobby)
 
----
-[![Security Status](https://www.murphysec.com/platform3/v31/badge/1688427475171692544.svg)](https://www.murphysec.com/console/report/1688411419949424640/1688427475171692544)
-
-
 Lettuce Redis Watcher is a [Redis](http://redis.io) watcher for [jCasbin](https://github.com/casbin/jcasbin).
 
 ## Getting Help
