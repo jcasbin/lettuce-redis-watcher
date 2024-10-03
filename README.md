@@ -10,7 +10,7 @@
 [![Release](https://img.shields.io/github/release/jcasbin/lettuce-redis-watcher.svg)](https://github.com/jcasbin/lettuce-redis-watcher/releases/latest)
 [![Discord](https://img.shields.io/discord/1022748306096537660?logo=discord&label=discord&color=5865F2)](https://discord.gg/S5UjpzGZjN)
 
-Lettuce Redis Watcher is a [Redis](http://redis.io) watcher for [jCasbin](https://github.com/casbin/jcasbin).
+Lettuce Redis Watcher is a [Redis](http://redis.io) watcher for [jCasbin](https://github.com/casbin/jcasbin). With this library, Casbin can load policy from Redis or save policy to it.
 
 ## Getting Help
 
